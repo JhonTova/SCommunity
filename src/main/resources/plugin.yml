@@ -1,0 +1,30 @@
+name: SCommunity
+version: 1.0.0
+main: me.sirius.scommunity.SCommunity
+author: Sirius
+api-version: '1.21'
+description: Plugin de misiones comunitarias diarias
+
+# Sin SiriusCore.jar, Bukkit ni intenta cargar este plugin.
+depend:
+  - SiriusCore
+
+commands:
+  mission:
+    description: Abre el menu de misiones
+    usage: /mission
+    aliases: [missions, mision, misiones]
+    
+  missionadmin:
+    description: Comandos de administracion
+    usage: /missionadmin <reload|reset|save>
+    aliases: [madmin, scadmin]
+
+permissions:
+  scommunity.mission:
+    description: Permite abrir el menu de misiones
+    default: true
+    
+  scommunity.admin:
+    description: Permite usar comandos de administracion
+    default: op

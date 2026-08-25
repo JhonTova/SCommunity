@@ -1,0 +1,231 @@
+reset-time:
+  hour: 0
+  minute: 0
+  # Elige el tipo de intervalo: "minutes" o "days"
+  interval-type: "days"
+  # Si interval-type es "minutes", usa este valor
+  minutes-interval: 1
+  # Si interval-type es "days", usa este valor
+  days-interval: 1
+
+reset-broadcast: true
+
+reset-warnings:
+  enabled: true
+  minutes-before: 5
+
+auto-save-interval: 300
+
+backup-settings:
+  max-backups: 10
+  auto-backup-on-reset: true
+
+contribution-settings:
+  allow-extra-contributions: true
+  block-after-completion: false
+
+community-levels:
+  enabled: true
+  max-level: 10
+  increment-per-level: 0.15
+
+mission-rotation:
+  items-per-day: 6
+
+global-mission:
+  base-multiplier: 30
+  
+item-categories:
+  bloques-comunes:
+    min-amount: 500
+    max-amount: 1500
+    display-color: "&6"
+    items:
+      - DIRT
+      - COBBLESTONE
+      - STONE
+      - SAND
+      - GRAVEL
+      - NETHERRACK
+      - END_STONE
+      - TERRACOTTA
+      - CLAY
+      - GRASS_BLOCK
+      
+  maderas:
+    min-amount: 400
+    max-amount: 1000
+    display-color: "&e"
+    items:
+      - OAK_LOG
+      - BIRCH_LOG
+      - SPRUCE_LOG
+      - JUNGLE_LOG
+      - ACACIA_LOG
+      - DARK_OAK_LOG
+      - MANGROVE_LOG
+      - CHERRY_LOG
+      - BAMBOO
+      
+  minerales-comunes:
+    min-amount: 200
+    max-amount: 800
+    display-color: "&f"
+    items:
+      - COAL
+      - IRON_INGOT
+      - COPPER_INGOT
+      - RAW_IRON
+      - RAW_COPPER
+      - REDSTONE
+      
+  minerales-raros:
+    min-amount: 128
+    max-amount: 326
+    display-color: "&6"
+    items:
+      - GOLD_INGOT
+      - LAPIS_LAZULI
+      - EMERALD
+      - RAW_GOLD
+      
+  minerales-epicos:
+    min-amount: 32
+    max-amount: 128
+    display-color: "&b"
+    items:
+      - DIAMOND
+      - NETHERITE_INGOT
+      - ANCIENT_DEBRIS
+      
+  especiales:
+    min-amount: 100
+    max-amount: 300
+    display-color: "&d"
+    items:
+      - PACKED_ICE
+      - BLUE_ICE
+      - SOUL_SAND
+      - GLOWSTONE
+      - ENDER_PEARL
+      - BLAZE_ROD
+      - PRISMARINE_SHARD
+
+global-item:
+  display-name: "&b&lCONTRIBUCIONES TOTALES"
+  material: NETHER_STAR
+  slot: 24
+
+rewards:
+  personal:
+    - "ae givercbook TSUKI {player} 1"
+    - "money give {player} 50000"
+    - "caramelos give {player} 500"
+    - "esencias give {player} 500"
+    
+  global:
+    level-1:
+      - "money give {player} 50000"
+      - "caramelos give {player} 500"
+      - "give {player} experience_bottle 16"
+      - "give {player} enchanted_golden_apple 2"
+      
+    level-2:
+      - "money give {player} 75000"
+      - "caramelos give {player} 500"
+      - "excellentcrates key give {player} zen 1"
+      - "give {player} experience_bottle 32"
+      - "give {player} enchanted_golden_apple 4"
+      
+    level-3:
+      - "money give {player} 100000"
+      - "caramelos give {player} 500"
+      - "excellentcrates key give {player} zen 2"
+      - "ae givercbook TSUKI {player} 1"
+      - "give {player} experience_bottle 48"
+      - "give {player} enchanted_golden_apple 6"
+      - "give {player} diamond 16"
+      
+    level-4:
+      - "money give {player} 150000"
+      - "caramelos give {player} 1000"
+      - "excellentcrates key give {player} jade 1"
+      - "ae givercbook TSUKI {player} 2"
+      - "give {player} experience_bottle 64"
+      - "give {player} enchanted_golden_apple 8"
+      - "give {player} diamond 24"
+      - "give {player} netherite_ingot 4"
+      
+    level-5:
+      - "money give {player} 200000"
+      - "caramelos give {player} 1000"
+      - "excellentcrates key give {player} jade 2"
+      - "ae givercbook HIKARI {player} 1"
+      - "give {player} experience_bottle 64"
+      - "give {player} enchanted_golden_apple 12"
+      - "give {player} diamond 32"
+      - "give {player} netherite_ingot 8"
+      - "give {player} totem_of_undying 1"
+      
+    level-6:
+      - "money give {player} 300000"
+      - "caramelos give {player} 1000"
+      - "excellentcrates key give {player} loto 1"
+      - "ae givercbook HIKARI {player} 2"
+      - "give {player} experience_bottle 64"
+      - "give {player} enchanted_golden_apple 16"
+      - "give {player} diamond 48"
+      - "give {player} netherite_ingot 12"
+      - "give {player} totem_of_undying 2"
+      
+    level-7:
+      - "money give {player} 400000"
+      - "caramelos give {player} 1500"
+      - "excellentcrates key give {player} loto 2"
+      - "excellentcrates key give {player} cristal 1"
+      - "ae givercbook YUZUKI {player} 1"
+      - "give {player} experience_bottle 64"
+      - "give {player} enchanted_golden_apple 20"
+      - "give {player} diamond_block 2"
+      - "give {player} netherite_ingot 16"
+      - "give {player} totem_of_undying 3"
+      
+    level-8:
+      - "money give {player} 500000"
+      - "caramelos give {player} 1500"
+      - "excellentcrates key give {player} cristal 2"
+      - "ae givercbook YUZUKI {player} 2"
+      - "give {player} experience_bottle 64"
+      - "give {player} enchanted_golden_apple 24"
+      - "give {player} diamond_block 4"
+      - "give {player} netherite_block 4"
+      - "give {player} totem_of_undying 4"
+      - "give {player} elytra 1"
+      
+    level-9:
+      - "money give {player} 750000"
+      - "caramelos give {player} 1500"
+      - "excellentcrates key give {player} ancestral 1"
+      - "excellentcrates key give {player} cristal 3"
+      - "ae givercbook YUZUKI {player} 3"
+      - "give {player} experience_bottle 64"
+      - "give {player} enchanted_golden_apple 32"
+      - "give {player} diamond_block 8"
+      - "give {player} netherite_block 4"
+      - "give {player} totem_of_undying 5"
+      - "give {player} shulker_box 2"
+      
+    level-10:
+      - "money give {player} 1000000"
+      - "caramelos give {player} 2000"
+      - "excellentcrates key give {player} ancestral 3"
+      - "excellentcrates key give {player} loto 3"
+      - "ae givercbook HIKARI {player} 3"
+      - "ae givercbook YUZUKI {player} 5"
+      - "give {player} experience_bottle 64"
+      - "give {player} enchanted_golden_apple 64"
+      - "give {player} diamond_block 16"
+      - "give {player} netherite_block 8"
+      - "give {player} totem_of_undying 10"
+      - "give {player} elytra 1"
+      - "give {player} beacon 1"
