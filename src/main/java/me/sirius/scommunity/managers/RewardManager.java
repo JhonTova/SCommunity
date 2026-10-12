@@ -28,7 +28,7 @@ public class RewardManager {
         String message = plugin.getConfigManager().getMessage("mission-personal-completed");
         Text.send(player, message);
         
-        plugin.getDataManager().saveData();
+        plugin.getDataManager().requestSave();
     }
 
     public void distributeGlobalRewards() {
@@ -61,7 +61,7 @@ public class RewardManager {
             .replace("{level}", String.valueOf(level));
         Text.broadcast(broadcastMessage);
         
-        plugin.getDataManager().saveData();
+        plugin.getDataManager().requestSave();
     }
 
     public void deliverPendingReward(Player player) {
@@ -90,11 +90,11 @@ public class RewardManager {
         Text.send(player, message);
         
         plugin.getDataManager().removePendingReward(uuid);
-        plugin.getDataManager().saveData();
+        plugin.getDataManager().requestSave();
     }
 
     public void addEligiblePlayer(UUID uuid) {
         plugin.getDataManager().addEligiblePlayer(uuid);
-        plugin.getDataManager().saveData();
+        plugin.getDataManager().requestSave();
     }
 }

@@ -13,7 +13,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import me.sirius.core.gui.Holders;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryListener implements Listener {
@@ -29,10 +31,11 @@ public class InventoryListener implements Listener {
         if (!(event.getWhoClicked() instanceof Player)) return;
         
         Player player = (Player) event.getWhoClicked();
-        
-        if (event.getInventory().getHolder() instanceof MissionGUI) {
+        InventoryHolder holder = Holders.of(event.getInventory());
+
+        if (holder instanceof MissionGUI) {
             handleMainGUIClick(event, player);
-        } else if (event.getInventory().getHolder() instanceof DepositGUI) {
+        } else if (holder instanceof DepositGUI) {
             handleDepositGUIClick(event, player);
         }
     }
@@ -41,10 +44,11 @@ public class InventoryListener implements Listener {
     public void onInventoryDrag(InventoryDragEvent event) {
         if (!(event.getWhoClicked() instanceof Player)) return;
         
-        if (event.getInventory().getHolder() instanceof MissionGUI) {
+        InventoryHolder holder = Holders.of(event.getInventory());
+        if (holder instanceof MissionGUI) {
             event.setCancelled(true);
             event.setResult(org.bukkit.event.Event.Result.DENY);
-        } else if (event.getInventory().getHolder() instanceof DepositGUI) {
+        } else if (holder instanceof DepositGUI) {
             for (int slot : event.getRawSlots()) {
                 if (slot >= 45 && slot < 54) {
                     event.setCancelled(true);
@@ -120,7 +124,7 @@ public class InventoryListener implements Listener {
         
         Player player = (Player) event.getPlayer();
         
-        if (event.getInventory().getHolder() instanceof DepositGUI) {
+        if (Holders.of(event.getInventory()) instanceof DepositGUI) {
             returnItems(player, event.getInventory());
         }
     }
@@ -158,7 +162,7 @@ public class InventoryListener implements Listener {
             
             for (ItemStack item : validItems) {
                 if (item != null && item.getType() != Material.AIR) {
-                    player.getInventory().addItem(item);
+                    give(player, item);
                 }
             }
             
@@ -175,9 +179,16 @@ public class InventoryListener implements Listener {
         for (int i = 0; i < 45; i++) {
             ItemStack item = inventory.getItem(i);
             if (item != null && item.getType() != Material.AIR) {
-                player.getInventory().addItem(item);
                 inventory.setItem(i, null);
+                give(player, item);
             }
+        }
+    }
+
+    // Con el inventario lleno, addItem devuelve lo que no cabe y antes se perdia.
+    private void give(Player player, ItemStack item) {
+        for (ItemStack leftover : player.getInventory().addItem(item).values()) {
+            player.getWorld().dropItem(player.getLocation(), leftover);
         }
     }
 }

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DataManager {
 
@@ -16,9 +17,10 @@ public class DataManager {
     private FileConfiguration data;
     
     private final Map<UUID, PlayerMissionData> playerData = new ConcurrentHashMap<>();
-    private int totalGlobalProgress;
+    private volatile int totalGlobalProgress;
     private final Set<UUID> eligiblePlayers = ConcurrentHashMap.newKeySet();
     private final Set<UUID> pendingRewards = ConcurrentHashMap.newKeySet();
+    private final AtomicBoolean savePending = new AtomicBoolean();
     private long lastResetTime;
     private boolean globalCompleted;
     private int communityLevel;
@@ -172,6 +174,18 @@ public class DataManager {
         saveData();
     }
 
+    // Para todo lo que pasa durante el juego (depositos, premios, salidas). Antes
+    // cada uno reescribia data.yml en el hilo principal, varias veces por deposito.
+    // Varias peticiones seguidas se juntan en un solo guardado.
+    public void requestSave() {
+        if (savePending.compareAndSet(false, true)) {
+            plugin.scheduler().async(() -> {
+                savePending.set(false);
+                saveData();
+            });
+        }
+    }
+
     public PlayerMissionData getPlayerData(UUID uuid) {
         return playerData.computeIfAbsent(uuid, k -> new PlayerMissionData());
     }
@@ -232,7 +246,7 @@ public class DataManager {
         int maxLevel = plugin.getConfigManager().getConfig().getInt("community-levels.max-level", 10);
         if (communityLevel < maxLevel) {
             communityLevel++;
-            saveData();
+            requestSave();
         }
     }
 
@@ -248,7 +262,7 @@ public class DataManager {
         eligiblePlayers.clear();
         lastResetTime = System.currentTimeMillis();
         
-        saveData();
+        requestSave();
         plugin.getLogger().info("Personal reset complete | Global: " + totalGlobalProgress);
     }
 
@@ -257,20 +271,22 @@ public class DataManager {
         totalGlobalProgress = 0;
         globalCompleted = false;
         eligiblePlayers.clear();
-        saveData();
+        requestSave();
     }
 
+    // Concurrente: el guardado asincrono recorre el progreso mientras el hilo
+    // principal lo sigue sumando, y con un HashMap eso acababa en excepcion.
     public static class PlayerMissionData {
         private final Map<String, Integer> progress;
-        private boolean completed;
+        private volatile boolean completed;
 
         public PlayerMissionData() {
-            this.progress = new HashMap<>();
+            this.progress = new ConcurrentHashMap<>();
             this.completed = false;
         }
 
         public PlayerMissionData(Map<String, Integer> progress, boolean completed) {
-            this.progress = progress;
+            this.progress = new ConcurrentHashMap<>(progress);
             this.completed = completed;
         }
 

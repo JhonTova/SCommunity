@@ -29,8 +29,6 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            plugin.getDataManager().saveData();
-        });
+        plugin.getDataManager().requestSave();
     }
 }

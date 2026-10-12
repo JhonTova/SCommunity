@@ -220,7 +220,7 @@ public class MissionManager {
             checkGlobalCompletion();
         }
         
-        plugin.getDataManager().saveData();
+        plugin.getDataManager().requestSave();
         
         return personalProgressMade || communityProgressMade;
     }
@@ -264,7 +264,6 @@ public class MissionManager {
                 if (currentLevel < maxLevel) {
                     plugin.getDataManager().incrementCommunityLevel();
                     plugin.getDataManager().resetGlobalMission();
-                    plugin.getDataManager().saveData();
                     
                     String levelUpMsg = plugin.getConfigManager().getMessage("community-level-up")
                         .replace("{level}", String.valueOf(plugin.getDataManager().getCommunityLevel()));
